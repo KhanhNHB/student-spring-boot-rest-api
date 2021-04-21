@@ -2,6 +2,8 @@ package com.khanhnhb.springweb.controllers;
 
 import com.khanhnhb.springweb.entities.Student;
 import com.khanhnhb.springweb.services.StudentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -11,12 +13,14 @@ import java.util.List;
 @RestController
 //@Controller
 public class StudentRestController {
+    private static final Logger logger = LoggerFactory.getLogger(StudentRestController.class);
 
     @Autowired
     StudentService studentService;
 
     @RequestMapping(value = "/students", method = RequestMethod.GET)
     public List<Student> getStudents() {
+        logger.info("Get student list");
         return studentService.getAllStudent();
     }
 
