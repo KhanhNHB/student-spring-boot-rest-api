@@ -1,6 +1,6 @@
 package com.khanhnhb.springweb;
 
-import com.khanhnhb.springweb.entities.Student;
+import com.khanhnhb.springweb.entity.Student;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;

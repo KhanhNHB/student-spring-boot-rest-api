@@ -1,4 +1,4 @@
-package com.khanhnhb.springweb.entities;
+package com.khanhnhb.springweb.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

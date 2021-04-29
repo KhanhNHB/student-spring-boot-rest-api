@@ -1,6 +1,6 @@
 package com.khanhnhb.springweb.controllers;
 
-import com.khanhnhb.springweb.services.FileStorageService;
+import com.khanhnhb.springweb.service.FileStorageService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
