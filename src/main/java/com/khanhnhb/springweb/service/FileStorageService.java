@@ -1,4 +1,4 @@
-package com.khanhnhb.springweb.services;
+package com.khanhnhb.springweb.service;
 
 import com.khanhnhb.springweb.config.FileStorageConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;

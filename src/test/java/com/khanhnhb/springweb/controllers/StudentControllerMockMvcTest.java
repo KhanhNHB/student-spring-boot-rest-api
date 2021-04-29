@@ -7,7 +7,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-public class StudentRestControllerMockMvcTest {
+public class StudentControllerMockMvcTest {
 
     @Test
     public void testGetAllStudent() throws Exception {

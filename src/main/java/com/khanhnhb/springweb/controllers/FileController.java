@@ -1,6 +1,6 @@
 package com.khanhnhb.springweb.controllers;
 
-import com.khanhnhb.springweb.services.FileStorageService;
+import com.khanhnhb.springweb.service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
