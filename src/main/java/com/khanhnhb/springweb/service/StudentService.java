@@ -4,6 +4,8 @@ import com.khanhnhb.springweb.builder.StudentRequestBuilder;
 import com.khanhnhb.springweb.builder.SearchStudentsSpecificationBuilder;
 import com.khanhnhb.springweb.common.CommonResponse;
 import com.khanhnhb.springweb.entity.Student;
+import com.khanhnhb.springweb.exception.StudentAlreadyExistedException;
+import com.khanhnhb.springweb.exception.StudentNotFoundException;
 import com.khanhnhb.springweb.model.SearchStudentsRequest;
 import com.khanhnhb.springweb.model.SearchStudentsResponse;
 import com.khanhnhb.springweb.repository.StudentRepository;
@@ -53,29 +55,31 @@ public class StudentService {
     }
 
     public Student getStudent(long id) {
-        Optional<Student> student = studentRepository.findById(id);
+        return Optional.ofNullable(studentRepository.findById(id)).get()
+                .orElseThrow(() -> {
+                    throw new StudentNotFoundException("Student not found by ID: " + id);
+                });
+    }
 
-        if (!student.isPresent()) {
-            // TODO: Throw exception not found student by id
-            return null;
-        }
-
-        return student.get();
+    public Optional<Student> findStudentByName(String name) {
+        return studentRepository.findByName(name);
     }
 
     public Student createStudent(Student student) {
-        // TODO: Check existed
-        Student createdStudent = studentRepository.save(student);
-        return this.getStudent(createdStudent.getId());
+        if (findStudentByName(student.getName()).isPresent()) {
+            throw new StudentAlreadyExistedException("Student already by NAME: " + student.getName());
+        }
+        return studentRepository.save(student);
     }
 
     public Student updateStudent(long id, Student updateStudent) {
-        // TODO: Check existed
         Student student = this.getStudent(id);
-        // TODO: Mapper Handle
-        student.setPhone(updateStudent.getPhone());
-        Student updatedStudent = studentRepository.save(student);
-        return updatedStudent;
+        updateStudent.setId(student.getId());
+
+        if (findStudentByName(updateStudent.getName()).isPresent()) {
+            throw new StudentAlreadyExistedException("Student already by NAME: " + updateStudent.getName());
+        }
+        return studentRepository.save(updateStudent);
     }
 
     public void deleteStudent(long id) {
@@ -90,7 +94,7 @@ public class StudentService {
     }
 
     public CommonResponse searchStudents(Long id, String name, Integer age, String q,
-                                 String attribute, String order, Integer offset, Integer limit) {
+                                         String attribute, String order, Integer offset, Integer limit) {
         SearchStudentsRequest request = studentRequestBuilder.buildSearchStudentsRequest(id, name, age, q, attribute, order, offset, limit);
 
         Specification<Student> specification = studentSpecificationBuilder.buildSearchStudentsSpecification(request);
