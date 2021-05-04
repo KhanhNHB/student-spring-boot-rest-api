@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/students")
 public interface StudentControllerApi {
@@ -29,7 +31,7 @@ public interface StudentControllerApi {
     ResponseEntity getStudent(@PathVariable("id") Long id);
 
     @PostMapping()
-    ResponseEntity create(@RequestBody Student student);
+    ResponseEntity create(@Valid @RequestBody Student student);
 
     @PutMapping(value = "/{id}")
     ResponseEntity update(@PathVariable("id") Long id,
