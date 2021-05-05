@@ -3,14 +3,18 @@ package com.khanhnhb.springweb.controllers;
 import com.khanhnhb.springweb.common.CommonResponse;
 import com.khanhnhb.springweb.entity.Student;
 import com.khanhnhb.springweb.service.StudentService;
+import com.khanhnhb.springweb.validator.StudentValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/students")
@@ -19,6 +23,14 @@ public class StudentController implements StudentControllerApi {
 
     @Autowired
     StudentService studentService;
+
+    @Autowired
+    StudentValidator studentValidator;
+
+    @InitBinder(value = "student")
+    void initStudentValidator(WebDataBinder binder) {
+        binder.setValidator(studentValidator);
+    }
 
     @Override
     public ResponseEntity<CommonResponse> getStudents(String attribute, String order, Integer offset, Integer limit) {
@@ -37,7 +49,7 @@ public class StudentController implements StudentControllerApi {
     }
 
     @Override
-    public ResponseEntity create(Student student) {
+    public ResponseEntity create(@Valid Student student) {
         return new ResponseEntity<>(studentService.createStudent(student), HttpStatus.CREATED);
     }
 

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
@@ -23,8 +24,12 @@ public class Student {
     @Max(value = 80, message = "Age must be lower then 80")
     @Min(value = 18, message = "Age must be greater than 18")
     private int age;
+
+//    @Max(value = 12, message = "Phone no more than 12 characters (included +84)")
     private String phone;
     private String name;
+
+    @Email
     private String email;
 
 }
