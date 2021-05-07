@@ -29,7 +29,6 @@ public class Student {
     private String phone;
     private String name;
 
-    @Email
     private String email;
 
 }
